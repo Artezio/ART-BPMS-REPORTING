@@ -16,7 +16,6 @@
 		<property name="mailServerHost" value="mail.my-corp.com" />
 		<property name="mailServerPort" value="5025" />
 
-		<property name="defaultSerializationFormat" value="application/json"/>
 		<property name="expressionManager">
 			<bean class="org.camunda.bpm.engine.test.mock.MockExpressionManager"/>
 		</property>

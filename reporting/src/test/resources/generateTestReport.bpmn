@@ -2,14 +2,12 @@
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1nhw62a" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.1">
   <bpmn:process id="GenerateTestReport" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
-      <bpmn:outgoing>SequenceFlow_053gqoi</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_0ris32s</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_053gqoi" sourceRef="StartEvent_1" targetRef="Task_1gsi34h" />
     <bpmn:endEvent id="EndEvent_06ehn8e">
-      <bpmn:incoming>SequenceFlow_1hj63io</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_1l11bty</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_1hj63io" sourceRef="Task_1gsi34h" targetRef="EndEvent_06ehn8e" />
-    <bpmn:serviceTask id="Task_1gsi34h" name="Generate report" camunda:delegateExpression="${yargDelegate}">
+    <bpmn:serviceTask id="Task_1gsi34h" name="Generate xls report" camunda:delegateExpression="${yargDelegate}">
       <bpmn:extensionElements>
         <camunda:inputOutput>
           <camunda:inputParameter name="params">
@@ -18,42 +16,124 @@
               <camunda:entry key="extraItem">${extraItem}</camunda:entry>
             </camunda:map>
           </camunda:inputParameter>
-          <camunda:inputParameter name="templates">
-            <camunda:list>
-              <camunda:value>templates/testTemplate1.docx</camunda:value>
-              <camunda:value>templates/testTemplate2.docx</camunda:value>
-              <camunda:value>templates/testTemplate3.xls</camunda:value>
-              <camunda:value>templates/testTemplate4.xlsx</camunda:value>
-              <camunda:value>templates/testTemplate5.doc</camunda:value>
-            </camunda:list>
-          </camunda:inputParameter>
-          <camunda:outputParameter name="generatedReports">
-            <camunda:script scriptFormat="juel">${generatedReports}</camunda:script>
-          </camunda:outputParameter>
+          <camunda:inputParameter name="template">templates/testTemplate3.xls</camunda:inputParameter>
+          <camunda:inputParameter name="resultVariableName">xlsReport</camunda:inputParameter>
         </camunda:inputOutput>
       </bpmn:extensionElements>
-      <bpmn:incoming>SequenceFlow_053gqoi</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_1hj63io</bpmn:outgoing>
+      <bpmn:incoming>SequenceFlow_1sa3i6b</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_16fi78q</bpmn:outgoing>
     </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_0ris32s" sourceRef="StartEvent_1" targetRef="ExclusiveGateway_0l2v07k" />
+    <bpmn:sequenceFlow id="SequenceFlow_1sa3i6b" sourceRef="ExclusiveGateway_0l2v07k" targetRef="Task_1gsi34h" />
+    <bpmn:parallelGateway id="ExclusiveGateway_0l2v07k">
+      <bpmn:incoming>SequenceFlow_0ris32s</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1sa3i6b</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_05h9lo3</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_0sb9ghp</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_16fi78q" sourceRef="Task_1gsi34h" targetRef="ExclusiveGateway_1navsly" />
+    <bpmn:sequenceFlow id="SequenceFlow_1l11bty" sourceRef="ExclusiveGateway_1navsly" targetRef="EndEvent_06ehn8e" />
+    <bpmn:serviceTask id="ServiceTask_07kllh4" name="Generate xlsx report" camunda:delegateExpression="${yargDelegate}">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="params">
+            <camunda:map>
+              <camunda:entry key="itemsForSale">${itemsForSale}</camunda:entry>
+              <camunda:entry key="extraItem">${extraItem}</camunda:entry>
+            </camunda:map>
+          </camunda:inputParameter>
+          <camunda:inputParameter name="template">templates/testTemplate4.xlsx</camunda:inputParameter>
+          <camunda:inputParameter name="resultVariableName">xlsxReport</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_0sb9ghp</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0d7uo87</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="ServiceTask_1i66j84" name="Generate docx report" camunda:delegateExpression="${yargDelegate}">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="params">
+            <camunda:map>
+              <camunda:entry key="itemsForSale">${itemsForSale}</camunda:entry>
+              <camunda:entry key="extraItem">${extraItem}</camunda:entry>
+            </camunda:map>
+          </camunda:inputParameter>
+          <camunda:inputParameter name="template">templates/testTemplate1.docx</camunda:inputParameter>
+          <camunda:inputParameter name="resultVariableName">docxReport</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_05h9lo3</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0id3te2</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_05h9lo3" sourceRef="ExclusiveGateway_0l2v07k" targetRef="ServiceTask_1i66j84" />
+    <bpmn:sequenceFlow id="SequenceFlow_0id3te2" sourceRef="ServiceTask_1i66j84" targetRef="ExclusiveGateway_1navsly" />
+    <bpmn:sequenceFlow id="SequenceFlow_0sb9ghp" sourceRef="ExclusiveGateway_0l2v07k" targetRef="ServiceTask_07kllh4" />
+    <bpmn:sequenceFlow id="SequenceFlow_0d7uo87" sourceRef="ServiceTask_07kllh4" targetRef="ExclusiveGateway_1navsly" />
+    <bpmn:parallelGateway id="ExclusiveGateway_1navsly">
+      <bpmn:incoming>SequenceFlow_16fi78q</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_0id3te2</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_0d7uo87</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1l11bty</bpmn:outgoing>
+    </bpmn:parallelGateway>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="GenerateTestReport">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds x="156" y="103" width="36" height="36" />
+        <dc:Bounds x="173" y="235" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_053gqoi_di" bpmnElement="SequenceFlow_053gqoi">
-        <di:waypoint x="192" y="121" />
-        <di:waypoint x="297" y="121" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="EndEvent_06ehn8e_di" bpmnElement="EndEvent_06ehn8e">
-        <dc:Bounds x="488" y="103" width="36" height="36" />
+        <dc:Bounds x="746" y="235" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_1hj63io_di" bpmnElement="SequenceFlow_1hj63io">
-        <di:waypoint x="397" y="121" />
-        <di:waypoint x="488" y="121" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ServiceTask_04w4w38_di" bpmnElement="Task_1gsi34h">
-        <dc:Bounds x="297" y="81" width="100" height="80" />
+        <dc:Bounds x="411" y="213" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0ris32s_di" bpmnElement="SequenceFlow_0ris32s">
+        <di:waypoint x="209" y="253" />
+        <di:waypoint x="259" y="253" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1sa3i6b_di" bpmnElement="SequenceFlow_1sa3i6b">
+        <di:waypoint x="309" y="253" />
+        <di:waypoint x="411" y="253" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ParallelGateway_0lvh8ky_di" bpmnElement="ExclusiveGateway_0l2v07k">
+        <dc:Bounds x="259" y="228" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_16fi78q_di" bpmnElement="SequenceFlow_16fi78q">
+        <di:waypoint x="511" y="253" />
+        <di:waypoint x="613" y="253" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1l11bty_di" bpmnElement="SequenceFlow_1l11bty">
+        <di:waypoint x="663" y="253" />
+        <di:waypoint x="746" y="253" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_07kllh4_di" bpmnElement="ServiceTask_07kllh4">
+        <dc:Bounds x="411" y="331" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_1i66j84_di" bpmnElement="ServiceTask_1i66j84">
+        <dc:Bounds x="411" y="89" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_05h9lo3_di" bpmnElement="SequenceFlow_05h9lo3">
+        <di:waypoint x="284" y="228" />
+        <di:waypoint x="284" y="129" />
+        <di:waypoint x="411" y="129" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0id3te2_di" bpmnElement="SequenceFlow_0id3te2">
+        <di:waypoint x="511" y="129" />
+        <di:waypoint x="638" y="129" />
+        <di:waypoint x="638" y="228" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0sb9ghp_di" bpmnElement="SequenceFlow_0sb9ghp">
+        <di:waypoint x="284" y="278" />
+        <di:waypoint x="284" y="371" />
+        <di:waypoint x="411" y="371" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0d7uo87_di" bpmnElement="SequenceFlow_0d7uo87">
+        <di:waypoint x="511" y="371" />
+        <di:waypoint x="638" y="371" />
+        <di:waypoint x="638" y="278" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ParallelGateway_02lynsd_di" bpmnElement="ExclusiveGateway_1navsly">
+        <dc:Bounds x="613" y="228" width="50" height="50" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
