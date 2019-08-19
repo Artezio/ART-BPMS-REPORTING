@@ -4,12 +4,22 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <artifactId>mortgage-pilot</artifactId>
-        <groupId>com.farzoom.mortgage</groupId>
-        <version>1.0</version>
-    </parent>
+
+    <groupId>com.artezio.bpm.camunda</groupId>
     <artifactId>reporting</artifactId>
+    <version>1.0</version>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <repositories>
         <repository>
@@ -22,6 +32,10 @@
         </repository>
     </repositories>
 
+    <properties>
+        <camunda.version>7.10.0</camunda.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>xml-apis</groupId>
@@ -32,6 +46,18 @@
             <groupId>com.haulmont.yarg</groupId>
             <artifactId>yarg</artifactId>
             <version>2.1.6</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.dom4j</groupId>
+                    <artifactId>dom4j</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>2.1.1</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>javax</groupId>
