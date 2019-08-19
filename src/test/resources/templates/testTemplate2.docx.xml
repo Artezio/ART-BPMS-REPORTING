@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<report name="testReport">
+    <templates>
+        <template code="templates/testTemplate2.docx"
+                  documentName="testTemplate2.docx"
+                  documentPath="templates/testTemplate2.docx"
+                  outputType="pdf"
+                  outputNamePattern="testTemplate2-result.pdf"/>
+    </templates>
+    <parameters/>
+
+    <rootBand name="Root" orientation="H">
+        <bands>
+            <band name="itemsForSale" orientation="H">
+                <queries>
+                    <query name="itemForSale" type="json">
+                        <script>parameter=itemsForSale $[*]</script>
+                    </query>
+                </queries>
+            </band>
+            <band name="extraItem" orientation="H">
+                <queries>
+                    <query name="extraItem" type="json">
+                        <script>parameter=extraItem $</script>
+                    </query>
+                </queries>
+            </band>
+        </bands>
+        <queries/>
+    </rootBand>
+</report>

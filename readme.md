@@ -8,7 +8,7 @@
 #### Usage
 
 * Usage in **Maven** projects:
-  * Clone this repository and navigate to `reporting` subdirectory
+  * Clone this repository and navigate into its directory
   * Run `mvn clean install`
   * Add the following dependency to your application pom.xml:
       ```
@@ -19,7 +19,7 @@
       </dependency>
       ```
 * Usage in non-maven projects: 
-  * Build the module and add compiled jar to your Camunda engine classpath (i.e. into EAR or WAR lib folder)
+  * Build the module with maven and add compiled jar to your Camunda engine classpath (i.e. into EAR or WAR lib folder)
 * Follow the instruction below to create and run reports
 
 

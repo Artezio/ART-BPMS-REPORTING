@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<report name="testReport">
+    <templates>
+        <template code="templates/testTemplate4.xlsx"
+                  documentName="testTemplate4.xlsx"
+                  documentPath="templates/testTemplate4.xlsx"
+                  outputType="xlsx"
+                  outputNamePattern="testTemplate4-result.xlsx"/>
+    </templates>
+    <parameters/>
+
+    <rootBand name="Root" orientation="H">
+        <bands>
+            <band name="itemsForSale" orientation="H">
+                <queries>
+                    <query name="itemForSale" type="json">
+                        <script>parameter=itemsForSale $[*]</script>
+                    </query>
+                </queries>
+            </band>
+            <band name="extraItem" orientation="H">
+                <queries>
+                    <query name="extraItem" type="json">
+                        <script>parameter=extraItem $</script>
+                    </query>
+                </queries>
+            </band>
+        </bands>
+        <queries/>
+    </rootBand>
+</report>
