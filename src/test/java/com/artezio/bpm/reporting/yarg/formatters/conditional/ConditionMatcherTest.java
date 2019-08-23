@@ -12,10 +12,10 @@ public class ConditionMatcherTest {
     private final String textSuffix = "Text after IF blocks";
     private final String textInIfBlock = "Some text in IF block";
     private final String textInElseBlock = "Some other text in Else block";
-    private final String textWihtoutMatches = "There are no IF blocks in this text ${if.property} ${ -if } ${iffi } ${If wrong case} ${ELSE} ${ENDIF}";
+    private final String textWihtoutMatches = "There are no IF blocks in this text #{if.property} #{ -if } #{iffi } #{If wrong case} #{ELSE} #{ENDIF}";
 
-    private final String textWithIfEndifMatch = textPrefix + "${IF someCondition}" + textInIfBlock + "${ENDIF}" + textSuffix;
-    private final String textWithIfElseEndifMatch = textPrefix + "${IF someCondition}" + textInIfBlock + "${ELSE}" + textInElseBlock + "${ENDIF}" + textSuffix;
+    private final String textWithIfEndifMatch = textPrefix + "#{IF someCondition}" + textInIfBlock + "#{ENDIF}" + textSuffix;
+    private final String textWithIfElseEndifMatch = textPrefix + "#{IF someCondition}" + textInIfBlock + "#{ELSE}" + textInElseBlock + "#{ENDIF}" + textSuffix;
 
     @Test
     public void testMatches() {

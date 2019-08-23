@@ -7,9 +7,9 @@ import java.util.regex.Pattern;
 
 public class ConditionMatcher {
 
-    private static final String IF_GROUP = "\\$\\{IF\\s?(.*?)}";
-    private static final String ELSE_MARKER = "\\$\\{ELSE}";
-    private static final String ENDIF_MARKER = "\\$\\{ENDIF}";
+    private static final String IF_GROUP = "#\\{IF\\s?(.*?)}";
+    private static final String ELSE_MARKER = "#\\{ELSE}";
+    private static final String ENDIF_MARKER = "#\\{ENDIF}";
     private static final String TEXT_GROUP = "(.*?)";
 
     private static final Pattern IF_ELSE_ENDIF_PATTERN = Pattern.compile(IF_GROUP + TEXT_GROUP + ELSE_MARKER + TEXT_GROUP + ENDIF_MARKER);
@@ -20,7 +20,8 @@ public class ConditionMatcher {
     private boolean hasElse;
 
     public static boolean isConditionalMarker(String string) {
-        return "IF".equals(string) || "ELSE".equals(string) || "ENDIF".equals(string);
+        //return "IF".equals(string) || "ELSE".equals(string) || "ENDIF".equals(string);
+        return Pattern.compile("#\\{IF").matcher(string).find() || Pattern.compile("#\\{ELSE").matcher(string).find() || Pattern.compile("#\\{ENDIF").matcher(string).find();
     }
 
     public static String replaceConditionsInText(String text) {

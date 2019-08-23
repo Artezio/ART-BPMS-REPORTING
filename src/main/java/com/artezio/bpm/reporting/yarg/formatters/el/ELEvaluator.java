@@ -1,5 +1,7 @@
 package com.artezio.bpm.reporting.yarg.formatters.el;
 
+import com.artezio.bpm.reporting.yarg.formatters.conditional.ConditionMatcher;
+
 import javax.el.ExpressionFactory;
 import javax.el.StandardELContext;
 import javax.el.ValueExpression;
@@ -11,7 +13,8 @@ import java.util.regex.Pattern;
 public class ELEvaluator {
 
     private static final String TEXT_GROUP = "(.*?)";
-    private static final String EL_EXPRESSION_GROUP = "#\\{" + TEXT_GROUP + "}";
+    private static final String NOT_CONDITIONAL_MARKER_GROUP = "(?!(IF|ELSE|ENDIF))";
+    private static final String EL_EXPRESSION_GROUP = "#\\{" + NOT_CONDITIONAL_MARKER_GROUP + TEXT_GROUP + "}";
 
     private static final Pattern EL_EXPRESSION_PATTERN = Pattern.compile(EL_EXPRESSION_GROUP);
 
@@ -36,7 +39,7 @@ public class ELEvaluator {
     public static String evaluateExpressionsInText(String text) {
         Matcher expressionMatcher = EL_EXPRESSION_PATTERN.matcher(text);
         while (expressionMatcher.find()) {
-            String expression = expressionMatcher.group(1);
+            String expression = expressionMatcher.group(2);
             // As per com.haulmont.yarg.formatters.impl.docx.TextWrapper#fillTextWithBandData
             // Alias rendering would be skipped inside tables, by checking the alias regex pattern
             // This would leave ${...} aliases inside EL expression, so presence of ${} is the only way to check if we
