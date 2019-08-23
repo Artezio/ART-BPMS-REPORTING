@@ -2,19 +2,20 @@
 
 #### Features
 
+* [Yarg] report generation from BPMN
 * [JUEL] expressions support  
 * Conditional text rendering based on JUEL expressions
 
-#### Usage
+#### Installation
 
-* Usage in **Maven** projects:
+* Adding to a **Maven** project:
   * Clone this repository and navigate into its directory
   * Run `mvn clean install`
   * Add the following dependency to your application pom.xml:
       ```
       <dependency>
           <groupId>com.artezio.bpm.camunda.report</groupId>
-          <artifactId>camunda-yarg-report</artifactId>
+          <artifactId>yarg</artifactId>
           <version>1.0</version>
       </dependency>
       ```
@@ -68,16 +69,20 @@ There is a feature to display or hide data depending on dynamically calculated c
 
 Condition format:
 
-```
-${IF <Juel expression with Boolean result>} 
-  <Displayed if expression is True> 
-${ELSE} 
-  <Displayed if expression is False> 
-${ENDIF}
-```
-`${ELSE}` block is optional
+> ### Note <br/>
+> There's no need to put `#{} or ${} brackets around EL expression. Everything after IF is considered to be an EL expression.`
 
-`${IF} ${ENDIF}` blocks are mandatory
+```
+#{IF <Juel expression with Boolean result>} 
+  <Displayed if expression is True> 
+#{ELSE} 
+  <Displayed if expression is False> 
+#{ENDIF}
+```
+`#{ELSE}` block is optional
+
+`#{IF} #{ENDIF}` blocks are mandatory
+
 
 Juel expression is any java EL 3.0 expression. Static method invocations are not supported  
 
@@ -90,16 +95,18 @@ You can use any references to Yarg band data inside Juel expressions and between
 ---
 #### DOCX conditional template example
 Output text depending on item.value using bean method getMinValue. Then output "true is equal to true"
+
+The  `${}` expressions are Yarg data references. The `#{}` expressions are JUEL expressions
    
 ```
 
    --- paragraph begin ---
 
-   ${IF ${item.value} > bean.getMinValue() }
-   The item ${item.name} has value greater than min value 
-   ${ELSE}
-   The item ${item.name} has value less than min value
-   ${ENDIF}
+   #{IF bean.getMinValue() > bean2.calculate(${item.value}) }
+       The item ${item.name} has value greater than min value which is #{bean.getMinValue()} 
+   #{ELSE}
+       The item ${item.name} has value less than min value which is #{bean.getMinValue()}
+   #{ENDIF}
    
    --- paragraph end ---
 
@@ -107,7 +114,7 @@ Output text depending on item.value using bean method getMinValue. Then output "
 
    --- paragraph begin ---
    
-   ${IF true == true} true is equal to true ${ENDIF}
+   #{IF true == true} true is equal to true #{ENDIF}
    
    --- paragraph end ---
   

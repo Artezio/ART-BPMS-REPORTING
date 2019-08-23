@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.artezio.bpm.camunda.report</groupId>
-    <artifactId>camunda-yarg-report</artifactId>
+    <artifactId>yarg</artifactId>
     <version>1.0</version>
     <build>
         <plugins>
