@@ -15,7 +15,7 @@
       ```
       <dependency>
           <groupId>com.artezio.bpm.camunda.report</groupId>
-          <artifactId>yarg</artifactId>
+          <artifactId>camunda-yarg-report</artifactId>
           <version>1.0</version>
       </dependency>
       ```
