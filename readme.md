@@ -9,14 +9,20 @@
 #### Installation
 
 * Adding to a **Maven** project:
-  * Clone this repository and navigate into its directory
-  * Run `mvn clean install`
-  * Add the following dependency to your application pom.xml:
+  * Open your project's pom
+  * Add the reference to the artezio mvn repository:
+      ```xml
+      <repository>
+          <id>artezio</id>
+          <url>https://nexus.artezio.net/repository/maven-releases</url>
+      </repository>
       ```
+  * Add the dependency:
+      ```xml
       <dependency>
-          <groupId>com.artezio.bpm.camunda.report</groupId>
-          <artifactId>camunda-yarg-report</artifactId>
-          <version>1.0</version>
+        <groupId>com.artezio.bpm.camunda.report</groupId>
+        <artifactId>camunda-yarg-report</artifactId>
+        <version>${yarg-report.version}</version>
       </dependency>
       ```
 * Usage in non-maven projects: 
